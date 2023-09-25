@@ -155,3 +155,4 @@ void loop() {
     display.display();
   }
 }
+// TODO: Eliminar la colisión de rebote de la pelota en la plataforma inferiors
