@@ -12,11 +12,11 @@ byte velocidadInicial = 40;
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define SCREEN_WIDTH 128 
-#define SCREEN_HEIGHT 64 
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
 
-#define OLED_RESET     -1
-#define SCREEN_ADDRESS 0x3C 
+#define OLED_RESET -1
+#define SCREEN_ADDRESS 0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup() {
@@ -36,35 +36,40 @@ void setup() {
 void loop() {
   int distancia = mide_distancia();
 
-  // Mapear la distancia a la velocidad
-  int velocidad = map(distancia, 5, 0, 255, 100);
-  
-  
-  velocidad = constrain(velocidad, 0, 255);
+  // Mapear la distancia a la velocidad en porcentaje
+  int velocidad = map(distancia, 30, 100, 0, 100);
 
-  control(distancia, velocidad);
+  velocidad = constrain(velocidad, 0, 100);
+
+  control(distancia, velocidad+35);
   Serial.print("Distancia: ");
   Serial.print(distancia);
-  Serial.print("| Velocidad: ");
-  Serial.println(velocidad);
+  Serial.print(" cm | Velocidad: ");
+  Serial.print(velocidad);
+  Serial.println("%");
 
   // Pantalla
   // Clear the buffer
   display.clearDisplay();
 
-  // Mostramos la distancia del sensor y la velocidad del motor
+  // Mostramos la distancia del sensor y la velocidad del motor en porcentaje
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setCursor(5, SCREEN_HEIGHT /2 - 5);
+  display.setCursor(5, SCREEN_HEIGHT / 2 - 5);
   display.print("Distancia: ");
-  display.println(distancia);
+  display.print(distancia);
+  display.println(" cm");
   display.print("Velocidad: ");
-  display.println(velocidad);
+  display.print(velocidad);
+  display.println("%");
+
+  // Dibujar la barra indicadora
+  int barraWidth = map(velocidad, 0, 100, 0, SCREEN_WIDTH);
+  display.fillRect(0, SCREEN_HEIGHT - 10, barraWidth, 10, WHITE);
+
   display.display();
 
-  
   delay(200);
-  
 }
 
 void control(int distancia, int vel) {
@@ -82,7 +87,7 @@ void control(int distancia, int vel) {
     // Control proporcional en el rango intermedio
     digitalWrite(motorA, HIGH);
     digitalWrite(motorB, LOW);
-    analogWrite(enable, vel);
+    analogWrite(enable, map(vel, 0, 100, 0, 255));
   }
 }
 
