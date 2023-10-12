@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 // put function declarations here:
-#define pinLed 2 // 30 pines
-// #define pinLed 9 // 38 pines
+// #define pinLed 2 // 30 pines
+#define pinLed 9 // 38 pines
 
 void setup() {
   pinMode(pinLed, OUTPUT);
