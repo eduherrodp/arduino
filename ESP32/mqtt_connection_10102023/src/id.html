@@ -8,8 +8,9 @@
 </head>
 <body>
     <script type="text/javascript">
-        var clientid = 'client_id_' + Math.floor((Math.random() * 1000000) + 1);
-        client = new Paho.MQTT.Client("broker.emqx.io", 32480, clientid);
+        
+        var clientid = "mqttx_747f3366"
+        client = new Paho.MQTT.Client("broker.emqx.io", 8083, clientid);
 
         client.onConnectionLost = onConnectionLost;
         client.onMessageArrived = onMessageArrived;

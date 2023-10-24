@@ -8,10 +8,10 @@ const   char*   password    =   "f85ac21de4";
 
 // MQTT credentials
 const   char*   mqtt_server =   "broker.emqx.io";
-const   int     mqtt_port   =   1883;
-const   char*   mqtt_user   =   "test";
-const   char*   mqtt_pass   =   "test";
-const   char*   mqtt_topic  =   "salida_x03014";
+const   int     mqtt_port   =   8083;
+const   char*   mqtt_user   =   "user";
+const   char*   mqtt_pass   =   "user";
+const   char*   mqtt_topic  =   "web_service_topic";
 
 // Messages control
 long lastMsg = 0;
@@ -88,7 +88,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() {
   while (!client.connected()) {
     Serial.println("Intentando conexión MQTT...");
-    String clientId = "iot_1_";
+    String clientId = "mqttx_11248121";
     clientId += String(random(0xffff), HEX);
 
     if (client.connect(clientId.c_str(), mqtt_user, mqtt_pass)) {
